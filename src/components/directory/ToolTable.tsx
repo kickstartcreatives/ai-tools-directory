@@ -1,4 +1,3 @@
-import { ExternalLink } from 'lucide-react';
 import type { Tool } from '../../lib/types';
 
 interface ToolTableProps {
@@ -65,18 +64,20 @@ export function ToolTable({ tools }: ToolTableProps) {
                 </div>
               </td>
               <td className="px-6 py-4">
-                <span className="inline-block px-3 py-1 bg-camel-rose text-white rounded-full text-xs font-semibold whitespace-nowrap">
-                  {tool.pricing_tier}
-                </span>
+                {tool.pricing_tier && tool.pricing_tier !== 'TBD' && (
+                  <span className="inline-block px-3 py-1 bg-camel-rose text-white rounded-full text-xs font-semibold whitespace-nowrap">
+                    {tool.pricing_tier}
+                  </span>
+                )}
               </td>
               <td className="px-6 py-4 text-center">
                 {tool.is_favorite && (
-                  <span className="text-lg" style={{ color: '#D81159' }}>⭐</span>
+                  <span className="text-xl" style={{ color: '#D81159' }}>★</span>
                 )}
               </td>
               <td className="px-6 py-4 text-center">
                 {tool.is_affiliate && (
-                  <ExternalLink className="w-4 h-4 text-camel-rose inline" />
+                  <span className="text-base" style={{ color: '#BE9780' }}>🔗</span>
                 )}
               </td>
             </tr>
