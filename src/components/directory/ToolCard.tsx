@@ -30,8 +30,8 @@ export function ToolCard({ tool }: ToolCardProps) {
           )}
         </div>
         {tool.is_favorite && (
-          <span className="text-2xl flex-shrink-0" style={{ color: '#D81159' }} title="Diane's Favorite">
-            ★
+          <span className="text-xl flex-shrink-0" title="Diane's Favorite">
+            ⭐
           </span>
         )}
       </div>

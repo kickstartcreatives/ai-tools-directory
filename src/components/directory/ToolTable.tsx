@@ -72,12 +72,12 @@ export function ToolTable({ tools }: ToolTableProps) {
               </td>
               <td className="px-6 py-4 text-center">
                 {tool.is_favorite && (
-                  <span className="text-xl" style={{ color: '#D81159' }}>★</span>
+                  <span className="text-lg">⭐</span>
                 )}
               </td>
               <td className="px-6 py-4 text-center">
                 {tool.is_affiliate && (
-                  <span className="text-base" style={{ color: '#BE9780' }}>🔗</span>
+                  <span className="text-base">🔗</span>
                 )}
               </td>
             </tr>
