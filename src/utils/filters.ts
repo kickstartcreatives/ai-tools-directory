@@ -7,19 +7,10 @@ export function filterTools(tools: Tool[], filters: Filters): Tool[] {
       const searchLower = filters.search.toLowerCase();
       const searchableText = [
         tool.name,
-        tool.description,
-        tool.diane_quote || '',
-        tool.pro_tips || ''
+        tool.description
       ].join(' ').toLowerCase();
 
       if (!searchableText.includes(searchLower)) return false;
-    }
-
-    // Tool type filter
-    if (filters.toolTypes.length > 0) {
-      if (!filters.toolTypes.some(type => tool.tool_type.includes(type))) {
-        return false;
-      }
     }
 
     // Purpose filter
@@ -44,9 +35,10 @@ export function filterTools(tools: Tool[], filters: Filters): Tool[] {
     }
 
     // Quick filters
-    if (filters.showFavoritesOnly && !tool.is_favorite) return false;
     if (filters.showFreePlansOnly && !tool.has_free_plan) return false;
     if (filters.showAffiliatesOnly && !tool.is_affiliate) return false;
+    if (filters.showInTechStackOnly && !tool.in_tech_stack) return false;
+    if (filters.showStudentCreatedOnly && !tool.created_by_student) return false;
 
     return true;
   });
@@ -55,12 +47,12 @@ export function filterTools(tools: Tool[], filters: Filters): Tool[] {
 export function getInitialFilters(): Filters {
   return {
     search: '',
-    toolTypes: [],
     purposes: [],
     pricingTiers: [],
     businessStages: [],
-    showFavoritesOnly: false,
     showFreePlansOnly: false,
     showAffiliatesOnly: false,
+    showInTechStackOnly: false,
+    showStudentCreatedOnly: false,
   };
 }

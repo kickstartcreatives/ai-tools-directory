@@ -3,7 +3,6 @@ import type { Filters } from '../../lib/types';
 
 interface ActiveFiltersProps {
   filters: Filters;
-  onRemoveToolType: (type: string) => void;
   onRemovePurpose: (purpose: string) => void;
   onRemovePricingTier: (tier: string) => void;
   onRemoveBusinessStage: (stage: string) => void;
@@ -12,20 +11,15 @@ interface ActiveFiltersProps {
 
 export function ActiveFilters({
   filters,
-  onRemoveToolType,
   onRemovePurpose,
   onRemovePricingTier,
   onRemoveBusinessStage,
   onClearAll,
 }: ActiveFiltersProps) {
   const hasActiveFilters =
-    filters.toolTypes.length > 0 ||
     filters.purposes.length > 0 ||
     filters.pricingTiers.length > 0 ||
-    filters.businessStages.length > 0 ||
-    filters.showFavoritesOnly ||
-    filters.showFreePlansOnly ||
-    filters.showAffiliatesOnly;
+    filters.businessStages.length > 0;
 
   if (!hasActiveFilters) return null;
 
@@ -41,9 +35,6 @@ export function ActiveFilters({
         </button>
       </div>
       <div className="flex flex-wrap gap-2">
-        {filters.toolTypes.map((type) => (
-          <FilterChip key={type} label={type} onRemove={() => onRemoveToolType(type)} />
-        ))}
         {filters.purposes.map((purpose) => (
           <FilterChip key={purpose} label={purpose} onRemove={() => onRemovePurpose(purpose)} />
         ))}

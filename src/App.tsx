@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
+import { VideoSection } from './components/layout/VideoSection';
 import { SearchBar } from './components/directory/SearchBar';
 import { QuickFilters } from './components/directory/QuickFilters';
 import { FilterSection } from './components/directory/FilterSection';
@@ -39,8 +40,8 @@ function App() {
     setFilters(prev => ({ ...prev, search }));
   };
 
-  const handleToggleFavorites = () => {
-    setFilters(prev => ({ ...prev, showFavoritesOnly: !prev.showFavoritesOnly }));
+  const handleToggleInTechStack = () => {
+    setFilters(prev => ({ ...prev, showInTechStackOnly: !prev.showInTechStackOnly }));
   };
 
   const handleToggleFreePlans = () => {
@@ -51,8 +52,8 @@ function App() {
     setFilters(prev => ({ ...prev, showAffiliatesOnly: !prev.showAffiliatesOnly }));
   };
 
-  const handleToolTypesChange = (toolTypes: string[]) => {
-    setFilters(prev => ({ ...prev, toolTypes }));
+  const handleToggleStudentCreated = () => {
+    setFilters(prev => ({ ...prev, showStudentCreatedOnly: !prev.showStudentCreatedOnly }));
   };
 
   const handlePurposesChange = (purposes: string[]) => {
@@ -65,13 +66,6 @@ function App() {
 
   const handleBusinessStagesChange = (businessStages: string[]) => {
     setFilters(prev => ({ ...prev, businessStages }));
-  };
-
-  const handleRemoveToolType = (type: string) => {
-    setFilters(prev => ({
-      ...prev,
-      toolTypes: prev.toolTypes.filter(t => t !== type)
-    }));
   };
 
   const handleRemovePurpose = (purpose: string) => {
@@ -138,6 +132,12 @@ function App() {
     <div className="min-h-screen flex flex-col">
       <Header />
 
+      {/* Intro Video Section */}
+      <VideoSection
+        videoUrl="https://www.youtube.com/embed/dQw4w9WgXcQ"
+        title="How to Use This Directory"
+      />
+
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-6">
         {/* Search Section */}
         <div className="bg-ivory p-6 rounded-xl border-2 border-warm-gray">
@@ -145,22 +145,22 @@ function App() {
             <SearchBar value={filters.search} onChange={handleSearchChange} />
           </div>
           <QuickFilters
-            showFavorites={filters.showFavoritesOnly}
+            showInTechStack={filters.showInTechStackOnly}
             showFreePlans={filters.showFreePlansOnly}
             showAffiliates={filters.showAffiliatesOnly}
-            onToggleFavorites={handleToggleFavorites}
+            showStudentCreated={filters.showStudentCreatedOnly}
+            onToggleInTechStack={handleToggleInTechStack}
             onToggleFreePlans={handleToggleFreePlans}
             onToggleAffiliates={handleToggleAffiliates}
+            onToggleStudentCreated={handleToggleStudentCreated}
           />
         </div>
 
         {/* Advanced Filters */}
         <FilterSection
-          toolTypes={filters.toolTypes}
           purposes={filters.purposes}
           pricingTiers={filters.pricingTiers}
           businessStages={filters.businessStages}
-          onToolTypesChange={handleToolTypesChange}
           onPurposesChange={handlePurposesChange}
           onPricingTiersChange={handlePricingTiersChange}
           onBusinessStagesChange={handleBusinessStagesChange}
@@ -169,7 +169,6 @@ function App() {
         {/* Active Filters */}
         <ActiveFilters
           filters={filters}
-          onRemoveToolType={handleRemoveToolType}
           onRemovePurpose={handleRemovePurpose}
           onRemovePricingTier={handleRemovePricingTier}
           onRemoveBusinessStage={handleRemoveBusinessStage}

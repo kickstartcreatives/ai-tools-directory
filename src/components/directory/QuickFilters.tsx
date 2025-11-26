@@ -1,31 +1,35 @@
 interface QuickFiltersProps {
-  showFavorites: boolean;
+  showInTechStack: boolean;
   showFreePlans: boolean;
   showAffiliates: boolean;
-  onToggleFavorites: () => void;
+  showStudentCreated: boolean;
+  onToggleInTechStack: () => void;
   onToggleFreePlans: () => void;
   onToggleAffiliates: () => void;
+  onToggleStudentCreated: () => void;
 }
 
 export function QuickFilters({
-  showFavorites,
+  showInTechStack,
   showFreePlans,
   showAffiliates,
-  onToggleFavorites,
+  showStudentCreated,
+  onToggleInTechStack,
   onToggleFreePlans,
   onToggleAffiliates,
+  onToggleStudentCreated,
 }: QuickFiltersProps) {
   return (
     <div className="flex gap-3 flex-wrap">
       <button
-        onClick={onToggleFavorites}
+        onClick={onToggleInTechStack}
         className={`px-4 py-2 rounded-full text-sm font-medium border-2 transition-all
-                   ${showFavorites
+                   ${showInTechStack
                      ? 'bg-camel-rose text-white border-camel-rose'
                      : 'bg-white text-black border-warm-gray hover:border-camel-rose hover:bg-ivory'
                    }`}
       >
-        ⭐ Diane's Favorites
+        🛠️ In Diane's Tech Stack
       </button>
       <button
         onClick={onToggleFreePlans}
@@ -35,7 +39,7 @@ export function QuickFilters({
                      : 'bg-white text-black border-warm-gray hover:border-camel-rose hover:bg-ivory'
                    }`}
       >
-        💰 Free Plans
+        💰 Free Option
       </button>
       <button
         onClick={onToggleAffiliates}
@@ -45,7 +49,17 @@ export function QuickFilters({
                      : 'bg-white text-black border-warm-gray hover:border-camel-rose hover:bg-ivory'
                    }`}
       >
-        🔗 Affiliates
+        🔗 Affiliate
+      </button>
+      <button
+        onClick={onToggleStudentCreated}
+        className={`px-4 py-2 rounded-full text-sm font-medium border-2 transition-all
+                   ${showStudentCreated
+                     ? 'bg-camel-rose text-white border-camel-rose'
+                     : 'bg-white text-black border-warm-gray hover:border-camel-rose hover:bg-ivory'
+                   }`}
+      >
+        🎓 Student Created
       </button>
     </div>
   );

@@ -3,33 +3,26 @@ export interface Tool {
   name: string;
   url: string;
   description: string;
-  tool_type: string[];
   purpose: string[];
-  use_cases: string[];
   pricing_tier: string;
-  pricing_details?: string;
   has_free_plan: boolean;
   business_stages: string[];
-  upgrade_triggers: string[];
-  is_favorite: boolean;
   is_affiliate: boolean;
-  affiliate_note?: string;
-  diane_quote?: string;
-  pro_tips?: string;
-  display_order?: number;
+  in_tech_stack: boolean;
+  created_by_student: boolean;
   created_at: string;
   updated_at: string;
 }
 
 export interface Filters {
   search: string;
-  toolTypes: string[];
   purposes: string[];
   pricingTiers: string[];
   businessStages: string[];
-  showFavoritesOnly: boolean;
   showFreePlansOnly: boolean;
   showAffiliatesOnly: boolean;
+  showInTechStackOnly: boolean;
+  showStudentCreatedOnly: boolean;
 }
 
 export type SortOption =

@@ -1,24 +1,20 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { TOOL_TYPES, PURPOSES, PRICING_TIERS, BUSINESS_STAGES } from '../../lib/constants';
+import { PURPOSES, PRICING_TIERS, BUSINESS_STAGES, BUSINESS_STAGE_DESCRIPTIONS } from '../../lib/constants';
 
 interface FilterSectionProps {
-  toolTypes: string[];
   purposes: string[];
   pricingTiers: string[];
   businessStages: string[];
-  onToolTypesChange: (types: string[]) => void;
   onPurposesChange: (purposes: string[]) => void;
   onPricingTiersChange: (tiers: string[]) => void;
   onBusinessStagesChange: (stages: string[]) => void;
 }
 
 export function FilterSection({
-  toolTypes,
   purposes,
   pricingTiers,
   businessStages,
-  onToolTypesChange,
   onPurposesChange,
   onPricingTiersChange,
   onBusinessStagesChange,
@@ -45,26 +41,6 @@ export function FilterSection({
 
       {isExpanded && (
         <div className="p-6 space-y-6 border-t-2 border-warm-gray bg-ivory">
-          {/* Tool Type Filter */}
-          <div>
-            <label className="block font-semibold text-deep-purple mb-3">Tool Type</label>
-            <div className="flex flex-wrap gap-2">
-              {TOOL_TYPES.map((type) => (
-                <button
-                  key={type}
-                  onClick={() => toggleSelection(type, toolTypes, onToolTypesChange)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium border-2 transition-all
-                             ${toolTypes.includes(type)
-                               ? 'bg-camel-rose text-white border-camel-rose'
-                               : 'bg-white text-deep-purple border-warm-gray hover:border-camel-rose'
-                             }`}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Purpose Filter */}
           <div>
             <label className="block font-semibold text-deep-purple mb-3">Purpose</label>
@@ -107,12 +83,22 @@ export function FilterSection({
 
           {/* Business Stage Filter */}
           <div>
-            <label className="block font-semibold text-deep-purple mb-3">Business Stage</label>
+            <div className="mb-3">
+              <label className="block font-semibold text-deep-purple mb-1">Business Stage</label>
+              <p className="text-xs text-deep-purple opacity-75">Click a stage to see detailed recommendations</p>
+            </div>
             <div className="flex flex-wrap gap-2">
               {BUSINESS_STAGES.map((stage) => (
                 <button
                   key={stage}
-                  onClick={() => toggleSelection(stage, businessStages, onBusinessStagesChange)}
+                  onClick={() => {
+                    // If clicking the currently selected stage, deselect it, otherwise select only this one
+                    if (businessStages.includes(stage)) {
+                      onBusinessStagesChange([]);
+                    } else {
+                      onBusinessStagesChange([stage]);
+                    }
+                  }}
                   className={`px-3 py-1.5 rounded-full text-sm font-medium border-2 transition-all
                              ${businessStages.includes(stage)
                                ? 'bg-camel-rose text-white border-camel-rose'
@@ -123,6 +109,44 @@ export function FilterSection({
                 </button>
               ))}
             </div>
+
+            {/* Show description for selected stage */}
+            {businessStages.length > 0 && (
+              <div className="mt-4">
+                {businessStages.map((stage) => {
+                  const description = BUSINESS_STAGE_DESCRIPTIONS[stage];
+                  if (!description) return null;
+
+                  return (
+                    <div key={stage} className="bg-white border-2 border-warm-gray rounded-lg p-4">
+                      <h4 className="font-bold text-deep-purple mb-2">{stage}</h4>
+                      <p className="text-sm text-deep-purple mb-3">{description.intro}</p>
+
+                      <ul className="space-y-2 mb-3">
+                        {description.tools.map((tool, idx) => (
+                          <li key={idx} className="text-sm text-deep-purple leading-relaxed">
+                            • {tool}
+                          </li>
+                        ))}
+                      </ul>
+
+                      {description.whenToUpgrade && (
+                        <>
+                          <p className="font-semibold text-deep-purple text-sm mt-4 mb-2">When to Upgrade to the Next Level:</p>
+                          <ul className="space-y-1">
+                            {description.whenToUpgrade.map((item, idx) => (
+                              <li key={idx} className="text-sm text-deep-purple">
+                                • {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       )}
