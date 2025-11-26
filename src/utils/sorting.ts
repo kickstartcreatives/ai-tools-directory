@@ -32,13 +32,6 @@ export function sortTools(tools: Tool[], sortBy: SortOption): Tool[] {
         (PRICING_ORDER[b.pricing_tier] ?? 99) - (PRICING_ORDER[a.pricing_tier] ?? 99)
       );
 
-    case 'favorites-first':
-      return sorted.sort((a, b) => {
-        if (a.is_favorite && !b.is_favorite) return -1;
-        if (!a.is_favorite && b.is_favorite) return 1;
-        return a.name.localeCompare(b.name);
-      });
-
     default:
       return sorted;
   }

@@ -29,7 +29,6 @@ export type SortOption =
   | 'name-asc'
   | 'name-desc'
   | 'price-asc'
-  | 'price-desc'
-  | 'favorites-first';
+  | 'price-desc';
 
 export type ViewMode = 'grid' | 'table';
